@@ -17,9 +17,21 @@ angular.module('football', [])
     // crowdscores.com GET request
     var request = {
       method: 'GET',
-      url: 'https://api.crowdscores.com/v1/league-tables?competition_id=42&api_key=dcb6392b40ca452aaca1ee4d8258857b'
+      url: 'https://api.crowdscores.com/v1/league-tables?competition_id=48&api_key=dcb6392b40ca452aaca1ee4d8258857b'
 
     }
+
+    // 42 = championship
+    // 44 = league one
+    // 45 = league two
+    // 46 = La liga
+    // 47 = Ligue 1
+    // 48 = bundesliga
+    // 49 = serie A
+    // ------
+    // 55 = National league
+    // 56 = world cup
+    //
 
     $http(request).then(function successCallback(response) {
         // this callback will be called asynchronously
