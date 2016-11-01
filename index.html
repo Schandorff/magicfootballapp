@@ -12,7 +12,47 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
   <body ng-app="football">
-    <div class="" ng-controller="LeagueTableCtrl as LeagueTable" >
+    <div class="" ng-controller="LeagueTableCtrl as leagueTable" >
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                ID
+              </th>
+              <th>
+                Position
+              </th>
+              <th>
+                Name
+              </th>
+              <th>
+                Points
+              </th>
+              <th>
+                Games Played
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="team in leagueTable.table" >
+              <td>
+                {{team.dbid}}
+              </td>
+              <td>
+                {{team.position}}
+              </td>
+              <td>
+                {{team.name}}
+              </td>
+              <td>
+                {{team.points}}
+              </td>
+              <td>
+                {{team.gamesPlayed}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
     </div>
   </body>

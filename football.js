@@ -3,7 +3,7 @@ angular.module('football', [])
 
   function LeagueTableCtrl($scope, $http){ // is $scope needed here? my testing surgests it isn't.
     var vm = this;
-    vm.list = [];
+    vm.table = [];
 
     // football-data.org GET request
     // var request = {
@@ -36,8 +36,10 @@ angular.module('football', [])
     $http(request).then(function successCallback(response) {
         // this callback will be called asynchronously
         // when the response is available
-        vm.list = response.data;
-        console.log(vm.list);
+        vm.dataRes = response.data[0];
+        //access leagueTable
+        vm.table = vm.dataRes.leagueTable;
+        console.log(vm.table);
 
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
