@@ -31,13 +31,13 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Live score</a></li>
-              <li class="active"><a href="#">League Tables</a></li>
+              <li ng-class="{ active: leagueTable.tabIsSelected(1)}"><a ng-click="leagueTable.selectTab(1)">Topscore</a></li>
+              <li ng-class="{ active: leagueTable.tabIsSelected(2)}"><a ng-click="leagueTable.selectTab(2)">Liga tabel</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">leagues <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ligaer <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li class="dropdown-header">Udland</li>
-                  <li><a href="#">Premier League</a></li>
+                  <li><a ng-click="leagueTable.setReqVal(2)">Premier League</a></li>
                   <li><a ng-click="leagueTable.setReqVal(46)">La liga</a></li>
                   <li><a ng-click="leagueTable.setReqVal(48)">Bundesliga</a></li>
                   <li><a ng-click="leagueTable.setReqVal(49)">Serie A</a></li>
@@ -57,13 +57,68 @@
 
     <div class="container" ng-controller="MatchesCtrl as matches">
       <main>
+        <div ng-show="leagueTable.tabIsSelected(1)">
+          <div class="row">
+
+          </div>
+          <div class="row">
+            <table class="table table-striped table-hover">
+              <thead>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Team
+                </th>
+                <th>
+                  Goals
+                </th>
+                <th>
+                  Assists
+                </th>
+                <th>
+                  Red Cards
+                </th>
+                <th>
+                  Yellow Cards
+                </th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="player in leagueTable.playerStats">
+                  <td>
+                    {{player.name}}
+                  </td>
+                  <td>
+                    {{player.team.name}}
+                  </td>
+                  <td>
+                    {{player.playerstats[0].goals}}
+                  </td>
+                  <td>
+                    {{player.playerstats[0].assists}}
+                  </td>
+                  <td>
+                    {{player.playerstats[0].redCards}}
+                  </td>
+                  <td>
+                    {{player.playerstats[0].yellowCards}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div ng-show="leagueTable.tabIsSelected(2)">
+        <div ng-if="matches.requestDone" class="">
+          <div ng-repeat="match in matches.dataRes">
+            <h2>{{match.awayTeam.name}} vs {{match.homeTeam.name}}</h2>
+            <h3><em>{{match.competition.name}} {{match.season.name}}</em></h3>
+          </div>
+        </div>
         <div class="row">
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th>
-
-                  </th>
                   <th>
                     Position
                   </th>
@@ -84,9 +139,6 @@
               <tbody>
                 <tr ng-repeat="team in leagueTable.table" >
                   <td>
-                    {{team.dbid}}
-                  </td>
-                  <td>
                     {{team.position}}
                   </td>
                   <td>
@@ -99,11 +151,12 @@
                     {{team.gamesPlayed}}
                   </td>
                   <td>
-                    <button class="btn btn-default" ng-click="matches.request(team.dbid)">Request</button>
+                    <button class="btn btn-success" ng-click="matches.request(team.dbid)">Se kampe</button>
                   </td>
                 </tr>
               </tbody>
             </table>
+        </div>
         </div>
       </main>
     </div>

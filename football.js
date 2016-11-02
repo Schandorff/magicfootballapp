@@ -1,17 +1,19 @@
 angular.module('football', [])
   .controller('LeagueTableCtrl', LeagueTableCtrl, DataService)
   .controller('MatchesCtrl', MatchesCtrl)
-  .factory('DataService', DataService)
+  .service('DataService', DataService)
   .directive('matches', matches);
 
   function LeagueTableCtrl($scope, $http){ // is $scope needed here? my testing surgests it isn't.
-    var api_key = 'api_key=dcb6392b40ca452aaca1ee4d8258857b';
     var vm = this;
+    var api_key = 'api_key=dcb6392b40ca452aaca1ee4d8258857b';
+    var reqParam = 'league-tables?competition_id='; //default parameters
+    vm.reqVal = 2; //default competition_id
+
+    vm.activeTab = 2; //default active tab
     vm.table = [];
 
-    var reqParam = 'league-tables?competition_id=';
-    vm.reqVal = 46;
-
+    //request after change of league
     vm.setReqVal = function( val ){
       vm.reqVal = val;
       var request = {
@@ -35,7 +37,14 @@ angular.module('football', [])
 
     }
 
-    //vm.test = DataService(reqVal);
+    //request for top players
+    // $scope.$watch('activeTab', function() {
+    //     alert('hey, activeTab has changed to '+ vm.activeTab);
+    // });
+
+
+
+    //vm.test = DataService(vm.reqVal);
     //console.log(vm.test);
 
     // football-data.org GET request
@@ -47,7 +56,9 @@ angular.module('football', [])
     //   }
     // }
 
+    // 2 = premier league
     // 42 = championship
+    // 43 = FA cup
     // 44 = league one
     // 45 = league two
     // 46 = La liga
@@ -71,12 +82,40 @@ angular.module('football', [])
         vm.dataRes = response.data[0];
         //access leagueTable
         vm.table = vm.dataRes.leagueTable;
+        console.log(vm.table);
 
       }, function errorCallback(response) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
 
     });
+
+    // TABS (TAB FOR PLAYERSTATS)
+
+    vm.selectTab = function(setTab) {
+      vm.activeTab = setTab;
+      if (vm.activeTab === 1) {
+       var reqParam = 'playerstats?competition_id=';
+       var request = {
+         method: 'GET',
+         url: 'https://api.crowdscores.com/v1/' + reqParam + vm.reqVal + '&' + api_key
+       }
+
+       $http(request).then(function successCallback(response) {
+           vm.playerStats = response.data;
+           console.log(vm.playerStats);
+         }, function errorCallback(response) {
+
+       });
+     }
+     if (vm.activeTab === 2) {
+       console.log('activeTab is set as 2');
+     }
+
+    }
+    vm.tabIsSelected = function(checkTab) {
+      return vm.activeTab === checkTab;
+    }
 
   }
 
@@ -88,6 +127,7 @@ angular.module('football', [])
 
     vm.request = function(val) {
 
+
       // crowdscores.com GET MATCHES request
       var request = {
         method: 'GET',
@@ -98,6 +138,7 @@ angular.module('football', [])
           // this callback will be called asynchronously
           // when the response is available
           vm.dataRes = response.data;
+          vm.requestDone = true;
           //access matches
           console.log(vm.dataRes);
 
@@ -109,14 +150,17 @@ angular.module('football', [])
     }
   }
 
+
+
   function DataService($scope, $http) {
     var url_base = 'https://api.crowdscores.com/v1/';
     var api_key = 'api_key=dcb6392b40ca452aaca1ee4d8258857b';
     var reqParam = 'league-tables?competition_id=';
     var reqVal = 46; //Set as defualt?
-    DataService = function( val ){
+    var request = '';
+  //  DataService = function( val ){
 
-      this.initialize = function () {
+  //    this.initialize = function () {
         var request = {
           method: 'GET',
           url: url_base + reqParam + val + '&' + api_key
@@ -126,7 +170,7 @@ angular.module('football', [])
         $http(request).then(function successCallback(response) {
           // this callback will be called asynchronously
           // when the response is available
-          DataService = response.data;
+          data = response.data;
           //access matches
           console.log(vm.dataRes);
 
@@ -135,9 +179,9 @@ angular.module('football', [])
           // or server returns response with an error status.
           return false;
         });
-      }
-    } // end var Dataservice
-    return DataService;
+  //    }
+  //  } // end var Dataservice
+    return request;
 
   }
 
