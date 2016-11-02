@@ -10,7 +10,7 @@ angular.module('football', [])
     var reqParam = 'league-tables?competition_id='; //default parameters
     vm.reqVal = 2; //default competition_id
 
-    vm.activeTab = 2; //default active tab
+    vm.activeTab = 1; //default active tab
     vm.table = [];
 
     //request after change of league
@@ -29,12 +29,7 @@ angular.module('football', [])
           vm.table = vm.dataRes.leagueTable;
           console.log(vm.table);
 
-        }, function errorCallback(response) {
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-
-      });
-
+        }, function errorCallback(response) {});
     }
 
     //request for top players
@@ -94,7 +89,7 @@ angular.module('football', [])
 
     vm.selectTab = function(setTab) {
       vm.activeTab = setTab;
-      if (vm.activeTab === 1) {
+      if (vm.activeTab === 2) {
        var reqParam = 'playerstats?competition_id=';
        var request = {
          method: 'GET',
@@ -108,7 +103,7 @@ angular.module('football', [])
 
        });
      }
-     if (vm.activeTab === 2) {
+     if (vm.activeTab === 1) {
        console.log('activeTab is set as 2');
      }
 

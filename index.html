@@ -11,155 +11,163 @@
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body ng-app="football">
     <div ng-controller="LeagueTableCtrl as leagueTable">
-    <header>
-      <nav class="navbar navbar-default .navbar-fixed-top">
-        <div class="container">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Brand</a>
-          </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li ng-class="{ active: leagueTable.tabIsSelected(1)}"><a ng-click="leagueTable.selectTab(1)">Topscore</a></li>
-              <li ng-class="{ active: leagueTable.tabIsSelected(2)}"><a ng-click="leagueTable.selectTab(2)">Liga tabel</a></li>
+      <header>
+
+        <nav class="navbar navbar-default navbar-static-top">
+          <div class="container">
+            <ul class="nav navbar-nav">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ligaer <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose League <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li class="dropdown-header">Udland</li>
-                  <li><a ng-click="leagueTable.setReqVal(2)">Premier League</a></li>
-                  <li><a ng-click="leagueTable.setReqVal(46)">La liga</a></li>
-                  <li><a ng-click="leagueTable.setReqVal(48)">Bundesliga</a></li>
-                  <li><a ng-click="leagueTable.setReqVal(49)">Serie A</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Indland</li>
-                  <li><a href="#">Superliga</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">About our data</a></li>
+                  <li class="dropdown-header">Europe Top 5</li>
+                  <li><a href="#" ng-click="leagueTable.setReqVal(2)">Premier League</a></li>
+                  <li><a href="#" ng-click="leagueTable.setReqVal(46)">La liga</a></li>
+                  <li><a href="#" ng-click="leagueTable.setReqVal(47)">Ligue 1</a></li>
+                  <li><a href="#" ng-click="leagueTable.setReqVal(48)">Bundesliga</a></li>
+                  <li><a href="#" ng-click="leagueTable.setReqVal(49)">Serie A</a></li>
                 </ul>
               </li>
             </ul>
-          </div><!-- .navbar-collapse -->
-        </div><!-- .container-fluid -->
-      </nav>
-    </header>
-    <!-- END OF HEADER -->
+          </div>
+        </nav>
 
-    <div class="container" ng-controller="MatchesCtrl as matches">
+        <div class="subnav">
+          <ul>
+            <li ng-class="{ active: leagueTable.tabIsSelected(1)}">
+              <a href="#" ng-click="leagueTable.selectTab(1)">League Table</a>
+            </li>
+            <li ng-class="{ active: leagueTable.tabIsSelected(2)}">
+              <a href="#" ng-click="leagueTable.selectTab(2)">Top Scorers</a>
+            </li>
+          </ul>
+        </div>
+
+      </header>
+
+    <div class="table-container">
+
       <main>
-        <div ng-show="leagueTable.tabIsSelected(1)">
-          <div class="row">
 
-          </div>
+        <div ng-show="leagueTable.tabIsSelected(1)">
+          <h2></h2>
           <div class="row">
-            <table class="table table-striped table-hover">
-              <thead>
-                <th>
-                  Name
-                </th>
-                <th>
-                  Team
-                </th>
-                <th>
-                  Goals
-                </th>
-                <th>
-                  Assists
-                </th>
-                <th>
-                  Red Cards
-                </th>
-                <th>
-                  Yellow Cards
-                </th>
-              </thead>
-              <tbody>
-                <tr ng-repeat="player in leagueTable.playerStats">
-                  <td>
-                    {{player.name}}
-                  </td>
-                  <td>
-                    {{player.team.name}}
-                  </td>
-                  <td>
-                    {{player.playerstats[0].goals}}
-                  </td>
-                  <td>
-                    {{player.playerstats[0].assists}}
-                  </td>
-                  <td>
-                    {{player.playerstats[0].redCards}}
-                  </td>
-                  <td>
-                    {{player.playerstats[0].yellowCards}}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div ng-show="leagueTable.tabIsSelected(2)">
-        <div ng-if="matches.requestDone" class="">
-          <div ng-repeat="match in matches.dataRes">
-            <h2>{{match.awayTeam.name}} vs {{match.homeTeam.name}}</h2>
-            <h3><em>{{match.competition.name}} {{match.season.name}}</em></h3>
-          </div>
-        </div>
-        <div class="row">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover table-bordered">
               <thead>
                 <tr>
-                  <th>
+                  <th class="col-md-1 center">
                     Position
                   </th>
-                  <th>
-                    Name
+                  <th class="col-md-5">
+                    Team
                   </th>
-                  <th>
+                  <th class="col-md-1 center">
+                    Played
+                  </th>
+                  <th class="col-md-1 center">
+                    Won
+                  </th>
+                  <th class="col-md-1 center">
+                    Drawn
+                  </th>
+                  <th class="col-md-1 center">
+                    Lost
+                  </th>
+                  <th class="col-md-1 center">
+                    Goals
+                  </th>
+                  <th class="col-md-1 center">
                     Points
-                  </th>
-                  <th>
-                    Games Played
-                  </th>
-                  <th>
-
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="team in leagueTable.table" >
-                  <td>
+                  <td class="center">
                     {{team.position}}
                   </td>
                   <td>
                     {{team.name}}
                   </td>
-                  <td>
-                    {{team.points}}
-                  </td>
-                  <td>
+                  <td class="center">
                     {{team.gamesPlayed}}
                   </td>
-                  <td>
-                    <button class="btn btn-success" ng-click="matches.request(team.dbid)">Se kampe</button>
+                  <td class="center">
+                    {{team.wins}}
+                  </td>
+                  <td class="center">
+                    {{team.draws}}
+                  </td>
+                  <td class="center">
+                    {{team.losses}}
+                  </td>
+                  <td class="center">
+                    {{team.goalsFor}}:{{team.goalsAgainst}}
+                  </td>
+                  <td class="center">
+                    {{team.points}}
                   </td>
                 </tr>
               </tbody>
             </table>
+          </div>
         </div>
+
+        <div ng-show="leagueTable.tabIsSelected(2)">
+          <div class="row">
+            <table class="table table-striped table-hover table-bordered">
+              <thead>
+                <th class="col-md-4">
+                  Name
+                </th>
+                <th class="col-md-4">
+                  Team
+                </th>
+                <th class="col-md-1 center">
+                  Goals
+                </th>
+                <th class="col-md-1 center">
+                  Assists
+                </th>
+                <th class="col-md-1 center">
+                  <span class="glyphicon glyphicon-stop yellow"></span> Cards
+                </th>
+                <th class="col-md-1 center">
+                  <span class="glyphicon glyphicon-stop red"></span> Cards
+                </th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="player in leagueTable.playerStats">
+                  <td class="col-md-4">
+                    {{player.name}}
+                  </td>
+                  <td class="col-md-4">
+                    {{player.team.name}}
+                  </td>
+                  <td class="col-md-1 center">
+                    {{player.playerstats[0].goals}}
+                  </td>
+                  <td class="col-md-1 center">
+                    {{player.playerstats[0].assists}}
+                  </td>
+                  <td class="col-md-1 center">
+                    {{player.playerstats[0].yellowCards}}
+                  </td>
+                  <td class="col-md-1 center">
+                    {{player.playerstats[0].redCards}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+
       </main>
+
     </div>
-  </div>
   </body>
 </html>
