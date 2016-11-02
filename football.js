@@ -1,7 +1,8 @@
 angular.module('football', [])
   .controller('LeagueTableCtrl', LeagueTableCtrl, DataService)
   .controller('MatchesCtrl', MatchesCtrl)
-  .factory('DataService', DataService);
+  .factory('DataService', DataService)
+  .directive('matches', matches);
 
   function LeagueTableCtrl($scope, $http){ // is $scope needed here? my testing surgests it isn't.
     var api_key = 'api_key=dcb6392b40ca452aaca1ee4d8258857b';
@@ -9,7 +10,30 @@ angular.module('football', [])
     vm.table = [];
 
     var reqParam = 'league-tables?competition_id=';
-    var reqVal = 46;
+    vm.reqVal = 46;
+
+    vm.setReqVal = function( val ){
+      vm.reqVal = val;
+      var request = {
+        method: 'GET',
+        url: 'https://api.crowdscores.com/v1/' + reqParam + vm.reqVal + '&' + api_key
+      }
+
+      $http(request).then(function successCallback(response) {
+          // this callback will be called asynchronously
+          // when the response is available
+          vm.dataRes = response.data[0];
+          //access leagueTable
+          vm.table = vm.dataRes.leagueTable;
+          console.log(vm.table);
+
+        }, function errorCallback(response) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+
+      });
+
+    }
 
     //vm.test = DataService(reqVal);
     //console.log(vm.test);
@@ -38,7 +62,7 @@ angular.module('football', [])
     // crowdscores.com GET LEAGUE request
     var request = {
       method: 'GET',
-      url: 'https://api.crowdscores.com/v1/' + reqParam + reqVal + '&' + api_key
+      url: 'https://api.crowdscores.com/v1/' + reqParam + vm.reqVal + '&' + api_key
     }
 
     $http(request).then(function successCallback(response) {
@@ -61,7 +85,9 @@ angular.module('football', [])
     var vm = this;
     vm.dataRes = [];
 
+
     vm.request = function(val) {
+
       // crowdscores.com GET MATCHES request
       var request = {
         method: 'GET',
@@ -113,4 +139,10 @@ angular.module('football', [])
     } // end var Dataservice
     return DataService;
 
+  }
+
+  function matches() {
+      return {
+        templateUrl: '/magicfootballapp/templates/matches.html'
+      };
   }
