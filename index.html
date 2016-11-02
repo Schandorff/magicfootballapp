@@ -52,14 +52,16 @@
         </div><!-- .container-fluid -->
       </nav>
     </header>
-    <div class="container">
+    <!-- END OF HEADER -->
+
+    <div class="container" ng-controller="MatchesCtrl as matches">
       <main>
         <div class="row" ng-controller="LeagueTableCtrl as leagueTable" >
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>
-                    ID
+
                   </th>
                   <th>
                     Position
@@ -72,6 +74,9 @@
                   </th>
                   <th>
                     Games Played
+                  </th>
+                  <th>
+                    
                   </th>
                 </tr>
               </thead>
@@ -91,6 +96,9 @@
                   </td>
                   <td>
                     {{team.gamesPlayed}}
+                  </td>
+                  <td>
+                    <button class="btn btn-default" ng-click="matches.request(team.dbid)">Request</button>
                   </td>
                 </tr>
               </tbody>
