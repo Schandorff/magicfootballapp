@@ -1,26 +1,18 @@
 angular.module('football', [])
-  .controller('LeagueTableCtrl', LeagueTableCtrl)
+  .controller('LeagueTableCtrl', LeagueTableCtrl, DataService)
   .controller('MatchesCtrl', MatchesCtrl)
   .factory('DataService', DataService);
-
-  function DataService($scope, $http) {
-    var url_base = 'https://api.crowdscores.com/v1/';
-    var api_key = 'api_key=dcb6392b40ca452aaca1ee4d8258857b';
-    var DataService = [];
-
-    DataService.get = function( val ) {
-      
-    }
-
-    return DataService;
-  }
 
   function LeagueTableCtrl($scope, $http){ // is $scope needed here? my testing surgests it isn't.
     var api_key = 'api_key=dcb6392b40ca452aaca1ee4d8258857b';
     var vm = this;
     vm.table = [];
 
+    var reqParam = 'league-tables?competition_id=';
     var reqVal = 46;
+
+    //vm.test = DataService(reqVal);
+    //console.log(vm.test);
 
     // football-data.org GET request
     // var request = {
@@ -46,7 +38,7 @@ angular.module('football', [])
     // crowdscores.com GET LEAGUE request
     var request = {
       method: 'GET',
-      url: 'https://api.crowdscores.com/v1/league-tables?competition_id=' + reqVal + '&' + api_key
+      url: 'https://api.crowdscores.com/v1/' + reqParam + reqVal + '&' + api_key
     }
 
     $http(request).then(function successCallback(response) {
@@ -89,4 +81,36 @@ angular.module('football', [])
 
       });
     }
+  }
+
+  function DataService($scope, $http) {
+    var url_base = 'https://api.crowdscores.com/v1/';
+    var api_key = 'api_key=dcb6392b40ca452aaca1ee4d8258857b';
+    var reqParam = 'league-tables?competition_id=';
+    var reqVal = 46; //Set as defualt?
+    DataService = function( val ){
+
+      this.initialize = function () {
+        var request = {
+          method: 'GET',
+          url: url_base + reqParam + val + '&' + api_key
+        }
+        var self = this;
+
+        $http(request).then(function successCallback(response) {
+          // this callback will be called asynchronously
+          // when the response is available
+          DataService = response.data;
+          //access matches
+          console.log(vm.dataRes);
+
+        }, function errorCallback(response) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+          return false;
+        });
+      }
+    } // end var Dataservice
+    return DataService;
+
   }
