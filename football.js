@@ -15,6 +15,7 @@ angular.module('football', [])
 
     //request after change of league
     vm.setReqVal = function( val ){
+      var reqParam = 'league-tables?competition_id=';
       vm.reqVal = val;
       var request = {
         method: 'GET',
@@ -29,7 +30,24 @@ angular.module('football', [])
           vm.table = vm.dataRes.leagueTable;
           console.log(vm.table);
 
-        }, function errorCallback(response) {});
+        }, function errorCallback(response) {
+
+        });
+
+        //request for playerstats linked to choosen competition
+        var reqParam = 'playerstats?competition_id=';
+        var request = {
+          method: 'GET',
+          url: 'https://api.crowdscores.com/v1/' + reqParam + vm.reqVal + '&' + api_key
+        }
+
+        $http(request).then(function successCallback(response) {
+            vm.playerStats = response.data;
+            console.log(vm.playerStats);
+          }, function errorCallback(response) {
+
+        });
+
     }
 
     //request for top players
@@ -89,24 +107,20 @@ angular.module('football', [])
 
     vm.selectTab = function(setTab) {
       vm.activeTab = setTab;
-      if (vm.activeTab === 2) {
-       var reqParam = 'playerstats?competition_id=';
-       var request = {
-         method: 'GET',
-         url: 'https://api.crowdscores.com/v1/' + reqParam + vm.reqVal + '&' + api_key
-       }
 
-       $http(request).then(function successCallback(response) {
-           vm.playerStats = response.data;
-           console.log(vm.playerStats);
-         }, function errorCallback(response) {
+      //request for playerstats linked to choosen competition
+      var reqParam = 'playerstats?competition_id=';
+      var request = {
+        method: 'GET',
+        url: 'https://api.crowdscores.com/v1/' + reqParam + vm.reqVal + '&' + api_key
+      }
 
-       });
-     }
-     if (vm.activeTab === 1) {
-       console.log('activeTab is set as 2');
-     }
+      $http(request).then(function successCallback(response) {
+          vm.playerStats = response.data;
+          console.log(vm.playerStats);
+        }, function errorCallback(response) {
 
+      });
     }
     vm.tabIsSelected = function(checkTab) {
       return vm.activeTab === checkTab;
@@ -160,7 +174,6 @@ angular.module('football', [])
           method: 'GET',
           url: url_base + reqParam + val + '&' + api_key
         }
-        var self = this;
 
         $http(request).then(function successCallback(response) {
           // this callback will be called asynchronously

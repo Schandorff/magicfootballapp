@@ -1,0 +1,68 @@
+.navbar-default,
+.navbar-nav,
+.open,
+.navbar {
+  background-color: #52b36d; }
+
+.navbar {
+  margin-bottom: 0px;
+  border: none; }
+
+.navbar-default .navbar-nav {
+  width: 100%;
+  text-align: center; }
+  .navbar-default .navbar-nav li {
+    float: none;
+    display: inline-block; }
+    .navbar-default .navbar-nav li a.dropdown-toggle {
+      color: white !important; }
+      .navbar-default .navbar-nav li a.dropdown-toggle:hover {
+        background-color: #418f57; }
+      .navbar-default .navbar-nav li a.dropdown-toggle:focus {
+        background-color: #418f57; }
+
+.subnav {
+  background-color: #418f57;
+  height: 30px;
+  margin-bottom: 30px; }
+  .subnav .nav {
+    height: 30px; }
+  .subnav ul {
+    text-align: center;
+    padding-left: 0px;
+    line-height: 30px; }
+    .subnav ul li {
+      float: none;
+      display: inline-block; }
+      .subnav ul li a {
+        color: white;
+        margin: 0 10px; }
+
+.table-container {
+  max-width: 900px;
+  margin: 0 auto; }
+
+th.center,
+td.center {
+  text-align: center; }
+
+span.yellow {
+  color: yellow; }
+span.red {
+  color: red; }
+
+table tr.success {
+  background-color: #93cd7c; }
+
+table.table-striped > tbody > tr.cl-playoff {
+  background-color: #ebf6e7; }
+
+table > tbody > tr.el-qualify,
+table.table-striped > tbody > tr.el-qualify {
+  background-color: #70bbe1; }
+
+table > tbody > tr.el-playoff,
+table.table-striped > tbody > tr.el-playoff {
+  background-color: #e8f4fa; }
+
+/*# sourceMappingURL=style.css.map */
