@@ -120,12 +120,12 @@
 
         <div ng-show="leagueTable.tabIsSelected(2)">
           <div class="row">
-            <table class="table table-striped table-hover table-bordered">
+            <table class="table table-striped table-hover table-responsive table-bordered">
               <thead>
-                <th class="col-md-4">
+                <th class="col-md-3">
                   Name
                 </th>
-                <th class="col-md-4">
+                <th class="col-md-3">
                   Team
                 </th>
                 <th class="col-md-1 center">
@@ -134,19 +134,19 @@
                 <th class="col-md-1 center">
                   Assists
                 </th>
-                <th class="col-md-1 center">
+                <th class="col-md-2 center">
                   <span class="glyphicon glyphicon-stop yellow"></span> Cards
                 </th>
-                <th class="col-md-1 center">
+                <th class="col-md-2 center">
                   <span class="glyphicon glyphicon-stop red"></span> Cards
                 </th>
               </thead>
               <tbody>
                 <tr ng-repeat="player in leagueTable.playerStats">
-                  <td class="col-md-4">
+                  <td class="col-md-3">
                     {{player.name}}
                   </td>
-                  <td class="col-md-4">
+                  <td class="col-md-3">
                     {{player.team.name}}
                   </td>
                   <td class="col-md-1 center">
@@ -155,10 +155,10 @@
                   <td class="col-md-1 center">
                     {{player.playerstats[0].assists}}
                   </td>
-                  <td class="col-md-1 center">
+                  <td class="col-md-2 center">
                     {{player.playerstats[0].yellowCards}}
                   </td>
-                  <td class="col-md-1 center">
+                  <td class="col-md-2 center">
                     {{player.playerstats[0].redCards}}
                   </td>
                 </tr>
